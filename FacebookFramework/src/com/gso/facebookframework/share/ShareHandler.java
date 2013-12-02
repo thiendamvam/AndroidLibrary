@@ -8,6 +8,7 @@ import android.content.Context;
 import android.net.wifi.WifiConfiguration.Status;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.SyncStateContract.Constants;
 import android.util.Log;
 import android.widget.Toast;
@@ -50,7 +51,7 @@ public class ShareHandler implements ShareListener {
 
 	public boolean postFacebook(String accessToken, ShareData data, String appId) {
 		// message = IssueAdapter.currentDesription;
-
+		Log.d("postFacebook","appID"+appId);
 		Facebook facebook = new Facebook(appId);
 		facebook.setAccessToken(accessToken);
 		if (facebook != null) {
@@ -79,7 +80,15 @@ public class ShareHandler implements ShareListener {
 		return false;
 	}
 
-	private Handler mRunOnUi = new Handler();
+	private Handler mRunOnUi = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			Toast.makeText(context, "Posted to Facebook",
+					Toast.LENGTH_SHORT).show();
+		}
+	};
 
 	private final class WallPostListener extends BaseRequestListener {
 
@@ -89,14 +98,7 @@ public class ShareHandler implements ShareListener {
 
 			// TODO Auto-generated method stub
 
-			mRunOnUi.post(new Runnable() {
-				@Override
-				public void run() {
-					Log.d("WallPostListener", "" + response);
-					Toast.makeText(context, "Posted to Facebook",
-							Toast.LENGTH_SHORT).show();
-				}
-			});
+			mRunOnUi.sendEmptyMessage(0);
 
 		
 		}

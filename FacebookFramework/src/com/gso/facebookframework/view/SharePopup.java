@@ -100,17 +100,19 @@ public class SharePopup extends DialogFragment {
 
 		
 		private String message;
+		private ShareHandler shareHdler;
 
 		public ASynShare(String mes) {
 			// TODO Auto-generated constructor stub
 			this.message = mes;
+			shareHdler = new ShareHandler(context);
 		}
 		
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			
-			ShareHandler shareHdler = new ShareHandler(context);
+			
 			String accessToken = new FacebookHandler(context, getActivity(), Config.appId).getFacebookToken();
 			ShareData data = new ShareData();
 			data.setMessage(message);
@@ -122,12 +124,12 @@ public class SharePopup extends DialogFragment {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			setProgressBar(false);
-			if (result) {
-				Toast.makeText(getActivity(), "Sucessful", Toast.LENGTH_LONG)
-						.show();
-			} else {
-				Toast.makeText(getActivity(), "Fail", Toast.LENGTH_LONG).show();
-			}
+//			if (result) {
+//				Toast.makeText(getActivity(), "Sucessful", Toast.LENGTH_LONG)
+//						.show();
+//			} else {
+//				Toast.makeText(getActivity(), "Failure"+Config.appId, Toast.LENGTH_LONG).show();
+//			}
 		}
 
 	}
