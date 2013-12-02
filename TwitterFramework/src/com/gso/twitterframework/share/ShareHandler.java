@@ -1,5 +1,6 @@
 package com.gso.twitterframework.share;
 
+import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.http.AccessToken;
@@ -46,9 +47,10 @@ public class ShareHandler implements ShareListener {
 		if (accessToken != null) {
 			twitter.setOAuthAccessToken(accessToken);
 			String msg = limitContent(message, "");
+			StatusUpdate statusUpdate = new StatusUpdate(msg);
 			try {
 				Log.d("postTwitter", "share actiion");
-				twitter.updateStatus(msg);
+				twitter.updateStatus(statusUpdate);
 				return true;
 			} catch (twitter4j.TwitterException e) {
 				// TODO Auto-generated catch block
